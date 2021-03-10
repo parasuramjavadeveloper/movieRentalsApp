@@ -15,7 +15,6 @@ import java.util.Map;
  */
 public class RentalInfoService {
 
-
     /**
      * Calculates the rental information for the given Customer movieRentals
      * @param customer it has customer name and its movieRentals list
@@ -31,24 +30,33 @@ public class RentalInfoService {
             double thisAmount = 0;
             if(movieRental==null || movieRental.getMovieId()==null) continue;
             // determine amount for each movie
-            if (MovieUtils.REGULAR.equalsIgnoreCase(movies.get(movieRental.getMovieId()).getCode())) {
-                thisAmount = 2;
-                if (movieRental.getDays() > 2) {
-                    thisAmount = ((movieRental.getDays() - 2) * 1.5) + thisAmount;
+            switch (movies.get(movieRental.getMovieId()).getCode()){
+                case "REGULAR": {
+                    thisAmount = 2;
+                    if (movieRental.getDays() > 2) {
+                        thisAmount = ((movieRental.getDays() - 2) * 1.5) + thisAmount;
+                    }
+                    break;
                 }
-            } else if (MovieUtils.NEW.equalsIgnoreCase(movies.get(movieRental.getMovieId()).getCode())) {
-                thisAmount = movieRental.getDays() * 3;
-            } else {
-                thisAmount = 1.5;
-                if (movieRental.getDays() > 3) {
-                    thisAmount = ((movieRental.getDays() - 3) * 1.5) + thisAmount;
+                case "NEW": {
+                    thisAmount = movieRental.getDays() * 3;
+                    // add bonus for a two day new release rental
+                    if (movieRental.getDays() > 2)
+                        frequentEnterPoints++;
+                    break;
+                    }
+                case "CHILDREN": {
+                    thisAmount = 1.5;
+                    if (movieRental.getDays() > 3) {
+                        thisAmount = ((movieRental.getDays() - 3) * 1.5) + thisAmount;
+                    }
+                    break;
                 }
+                default: break;
             }
 
             //add frequent bonus points
             frequentEnterPoints++;
-            // add bonus for a two day new release rental
-            if (MovieUtils.NEW.equalsIgnoreCase(movies.get(movieRental.getMovieId()).getCode()) && movieRental.getDays() > 2) frequentEnterPoints++;
 
             //print figures for this rental
             result.append("\t").append(movies.get(movieRental.getMovieId()).getTitle()).append("\t").append(thisAmount).append("\n");

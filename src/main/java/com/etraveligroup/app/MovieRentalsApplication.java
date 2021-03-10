@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class MovieRentalsApplication {
 
     public static void main(String[] args) {
-        String result = RentalInfoService.rentalInformationSlip(new Customer("C. U. Stomer",Arrays.asList(new MovieRental("F001", 3), new MovieRental("F002", 1))));
+        String result = RentalInfoService.rentalInformationSlip(new Customer("C. U. Stomer", Arrays.asList(new MovieRental("F001", 3), new MovieRental("F002", 1))));
         if (!result.equals(MovieUtils.expected)) {
             throw new AssertionError("Expected: \n" + String.format(MovieUtils.expected) + "\n\n" + "Got: " + "\n" + result);
         }
