@@ -1,5 +1,6 @@
 package com.etraveligroup.utils;
 
+import com.etraveligroup.model.Customer;
 import com.etraveligroup.model.Movie;
 
 import java.util.HashMap;
@@ -11,15 +12,21 @@ import java.util.Map;
  * @author Parasuram
  * @since 08-03-2021
  */
-public interface MovieUtils {
-    String expected = "Rental Record for C. U. Stomer\n\tYou've Got Mail\t3.5\n\tMatrix\t2.0\nAmount owed is 5.5\nYou earned 2 frequent points\n";
+public abstract class MovieUtils {
 
-    static Map<String, Movie> movies() {
+   public static Map<String, Movie> movies() {
         Map<String, Movie> movies = new HashMap();
-        movies.put("F001", new Movie("You've Got Mail", "REGULAR"));
-        movies.put("F002", new Movie("Matrix", "REGULAR"));
-        movies.put("F003", new Movie("Cars", "CHILDREN"));
-        movies.put("F004", new Movie("Fast & Furious X", "NEW"));
+        movies.put("F001", new Movie("You've Got Mail", MovieTypes.REGULAR));
+        movies.put("F002", new Movie("Matrix", MovieTypes.REGULAR));
+        movies.put("F003", new Movie("Cars", MovieTypes.CHILDREN));
+        movies.put("F004", new Movie("Fast & Furious X", MovieTypes.NEW));
         return movies;
     }
+
+    public String rentalInformationSlip(Customer customer){
+       return rentalInformation(customer);
+    }
+
+    protected abstract String rentalInformation(Customer customer);
+
 }

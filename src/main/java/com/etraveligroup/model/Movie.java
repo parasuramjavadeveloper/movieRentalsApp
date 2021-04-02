@@ -1,5 +1,6 @@
 package com.etraveligroup.model;
 
+import com.etraveligroup.utils.MovieTypes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 public class Movie implements Serializable {
     private String title;
-    private String code;
+    private MovieTypes code;
 
 
 }

@@ -3,7 +3,6 @@ package com.etraveligroup.app;
 import com.etraveligroup.model.Customer;
 import com.etraveligroup.model.MovieRental;
 import com.etraveligroup.service.RentalInfoService;
-import com.etraveligroup.utils.MovieUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
@@ -18,9 +17,12 @@ import java.util.Arrays;
 public class MovieRentalsApplication {
 
     public static void main(String[] args) {
-        String result = RentalInfoService.rentalInformationSlip(new Customer("C. U. Stomer", Arrays.asList(new MovieRental("F001", 3), new MovieRental("F002", 1))));
-        if (!result.equals(MovieUtils.expected)) {
-            throw new AssertionError("Expected: \n" + String.format(MovieUtils.expected) + "\n\n" + "Got: " + "\n" + result);
+        String expected = "Rental Record for C. U. Stomer\n\tYou've Got Mail\t3.5\n\tMatrix\t2.0\nAmount owed is 5.5\nYou earned 2 frequent points\n";
+        Customer customer = new Customer("C. U. Stomer", Arrays.asList(new MovieRental("F001", 3), new MovieRental("F002", 1)));
+        String result = new RentalInfoService().rentalInformationSlip(customer);
+        if (!result.equals(expected)) {
+            String message = String.format("%n Expected: %n%s%n%n Got: %n%s",expected,result);
+            throw new AssertionError(message);
         }
         log.info("Success");
     }
